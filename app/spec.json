@@ -1,0 +1,266 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Products CRUD endpints",
+        "description": "Pure php implementation of REST API endpoints",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/products": {
+            "get": {
+                "summary": "Get list of products",
+                "operationId": "8e6b52efb846b6f339d17aef68b49ba5",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Product"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "server error"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create new product",
+                "operationId": "87962615c37b5399a87dfd7077393a3c",
+                "requestBody": {
+                    "description": "New product",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProductInsertRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "product created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "bad request"
+                    },
+                    "500": {
+                        "description": "server error"
+                    }
+                }
+            }
+        },
+        "/products/{id}": {
+            "get": {
+                "summary": "Get particular product",
+                "operationId": "aa0c692f27a2043049b0896fc7c1d314",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "product not found"
+                    },
+                    "500": {
+                        "description": "server error"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete existing product",
+                "operationId": "ac3b712ec2761b0ca874bc7fe28f4365",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "product deleted"
+                    },
+                    "404": {
+                        "description": "product not found"
+                    },
+                    "500": {
+                        "description": "server error"
+                    }
+                }
+            },
+            "patch": {
+                "summary": "Edit existing product",
+                "operationId": "2e513f6082d6f78d7c2d5ef6f4bc41bb",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Updated product",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProductUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "product updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "product not found"
+                    },
+                    "400": {
+                        "description": "bad request"
+                    },
+                    "500": {
+                        "description": "server error"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Product": {
+                "title": "Product Result",
+                "description": "A Product",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "example": "1234567890"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "ajax"
+                    },
+                    "price": {
+                        "type": "number",
+                        "example": "123.22"
+                    },
+                    "category": {
+                        "type": "string",
+                        "example": "software"
+                    },
+                    "attributes": {
+                        "description": "string>|null",
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "ProductInsertRequest": {
+                "title": "Product Insert",
+                "description": "A Product.",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "ajax",
+                        "nullable": true
+                    },
+                    "price": {
+                        "type": "number",
+                        "example": "123.22",
+                        "nullable": true
+                    },
+                    "category": {
+                        "type": "string",
+                        "example": "software",
+                        "nullable": true
+                    },
+                    "attributes": {
+                        "description": "string>|null",
+                        "type": "object",
+                        "nullable": true,
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "ProductUpdateRequest": {
+                "title": "Product Update",
+                "description": "A Product.",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "ajax"
+                    },
+                    "price": {
+                        "type": "number",
+                        "example": "123.22"
+                    },
+                    "category": {
+                        "type": "string",
+                        "example": "software"
+                    },
+                    "attributes": {
+                        "description": "string>|null",
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}
